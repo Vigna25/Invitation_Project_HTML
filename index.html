@@ -23,28 +23,27 @@
     aspect-ratio: 2 / 3;
   ">
 
-    <!-- Background image -->
-    <img src="Background_Image.png" alt="Tejesh and Vigna Engagement Invitation" style="
+    <!-- Complete background image -->
+    <img src="Background_image.png" alt="Tejesh and Vigna Engagement Invitation" style="
         display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        max-width: 700px;
-        height: auto;
-        object-fit: contain;
-        /*width: 100%;
         height: 100%;
-        object-fit: fill;*/
+        object-fit: fill;
       ">
 
     <!-- Invitation message -->
     <p style="
       position: absolute;
       top: 35%;
-      left: 4%;
-      width: 92%;
+      left: 3%;
+      width: 94%;
       margin: 0;
       text-align: center;
       line-height: 1.3;
-      font-size: 17px;
+      font-size: clamp(13px, 2.5vw, 17px);
       font-family: 'Times New Roman', Times, serif;
       color: #000000;
     ">
@@ -57,12 +56,12 @@
     <!-- Event date -->
     <p style="
       position: absolute;
-      top: 47.5%;
+      top: 48.5%;
       left: 0;
       width: 100%;
       margin: 0;
       text-align: center;
-      font-size: 25px;
+      font-size: clamp(19px, 3.5vw, 25px);
       font-family: 'Times New Roman', Times, serif;
       color: #915c02;
     ">
@@ -72,12 +71,12 @@
     <!-- Event time -->
     <p style="
       position: absolute;
-      top: 50.8%;
+      top: 52.5%;
       left: 0;
       width: 100%;
       margin: 0;
       text-align: center;
-      font-size: 20px;
+      font-size: clamp(16px, 3vw, 20px);
       font-family: 'Times New Roman', Times, serif;
       color: #000000;
     ">
@@ -87,12 +86,12 @@
     <!-- Countdown -->
     <p id="countdown" style="
       position: absolute;
-      top: 57%;
+      top: 59%;
       left: 0;
       width: 100%;
       margin: 0;
       text-align: center;
-      font-size: 25px;
+      font-size: clamp(17px, 3.5vw, 25px);
       line-height: 1.8;
       font-family: 'Times New Roman', Times, serif;
       color: #915c02;
@@ -103,13 +102,13 @@
     <!-- Venue -->
     <p style="
       position: absolute;
-      top: 66.5%;
+      top: 67%;
       left: 3%;
       width: 94%;
       margin: 0;
       text-align: center;
-      font-size: 15.5px;
-      line-height: normal;
+      font-size: clamp(12px, 2.2vw, 15.5px);
+      line-height: 1.5;
       font-family: 'Times New Roman', Times, serif;
       color: #000000;
     ">
@@ -119,19 +118,19 @@
           color: #915c02;
           font-family: 'Times New Roman', Times, serif;
         ">
-        <strong>Sai Prabha Residency</strong>
+        Sai Prabha Residency
       </a>
     </p>
 
     <!-- Lunch -->
     <p style="
       position: absolute;
-      top: 73.5%;
+      top: 74%;
       left: 0;
       width: 100%;
       margin: 0;
       text-align: center;
-      font-size: 17px;
+      font-size: clamp(12px, 2.2vw, 15px);
       font-family: 'Times New Roman', Times, serif;
       color: #000000;
     ">
@@ -143,9 +142,9 @@
   <script>
 
     // Target event date and time
-    // Test timestamp retained as requested
+    // Replace this test timestamp with your actual event date
     const targetDate =
-      new Date("November 15, 2026 02:06:00").getTime();
+      new Date("November 15, 2026 02:12:00").getTime();
 
     // Redirect destination
     const redirectURL = "./final_page.html";
@@ -154,6 +153,7 @@
       document.getElementById("countdown");
 
     let timer;
+    let redirectStarted = false;
 
     function updateCountdown() {
 
@@ -166,11 +166,17 @@
         clearInterval(timer);
 
         countdownElement.innerHTML =
-          "&#8987; <strong>The Event has already started</strong>";
+          "&#8987; <strong>The Event has already started!</strong>";
 
-        setTimeout(function () {
-          window.location.href = redirectURL;
-        }, 3000);
+        if (!redirectStarted) {
+
+          redirectStarted = true;
+
+          setTimeout(function () {
+            window.location.href = redirectURL;
+          }, 3000);
+
+        }
 
         return;
       }
@@ -194,12 +200,14 @@
         (distance % (1000 * 60)) / 1000
       );
 
-      // Display countdown
+      // Display bold countdown
       countdownElement.innerHTML =
-        "&#9203; <strong>" + days + "d " +
+        "&#9203; <strong>" +
+        days + "d " +
         hours + "h " +
         minutes + "m " +
-        seconds + "s </strong>";
+        seconds + "s" +
+        "</strong>";
     }
 
     // Start countdown immediately
