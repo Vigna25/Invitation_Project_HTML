@@ -42,6 +42,17 @@
       aspect-ratio: 2 / 3;
       overflow: hidden;
       container-type: inline-size;
+
+      /* Hide until image loads */
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Show invitation after image loads */
+    .invitation.image-loaded {
+      visibility: visible;
+      opacity: 1;
     }
 
     /* Background image */
@@ -241,6 +252,7 @@
   </style>
 </head>
 
+
 <body>
 
   <main class="invitation">
@@ -296,21 +308,78 @@
   </main>
 
 
-  <!-- Countdown functionality -->
+  <!-- JavaScript functionality -->
   <script>
-     window.addEventListener("load", () => {
+
+    // =================================
+    // WAIT FOR BACKGROUND IMAGE
+    // =================================
+
+    const backgroundImage =
+      document.querySelector(".background");
+
+    const invitation =
+      document.querySelector(".invitation");
+
+    function showInvitation() {
+      invitation.classList.add("image-loaded");
+    }
+
+    // Check whether image is already loaded
+    if (
+      backgroundImage.complete &&
+      backgroundImage.naturalWidth > 0
+    ) {
+
+      showInvitation();
+
+    } else {
+
+      // Show invitation after successful image download
+      backgroundImage.addEventListener(
+        "load",
+        showInvitation,
+        { once: true }
+      );
+
+      // Prevent permanent blank screen if image fails
+      backgroundImage.addEventListener(
+        "error",
+        showInvitation,
+        { once: true }
+      );
+
+    }
+
+
+    // =================================
+    // INITIAL SCROLL POSITION
+    // =================================
+
+    window.addEventListener("load", () => {
+
       const scrollPosition =
         (document.documentElement.scrollHeight -
-        window.innerHeight) * 0.20;
+          window.innerHeight) * 0.20;
 
       window.scrollTo({
         top: scrollPosition,
         behavior: "instant"
       });
+
     });
-    TEST_MODE = false
+
+
+    // =================================
+    // COUNTDOWN CONFIGURATION
+    // =================================
+
+    const TEST_MODE = false;
+
     // Engagement date and time (IST)
-    const targetDate = TEST_MODE ? Date.now() + 30 * 1000: new Date("2026-11-20T09:39:00+05:30").getTime();
+    const targetDate = TEST_MODE
+      ? Date.now() + 30 * 1000
+      : new Date("2026-11-20T09:39:00+05:30").getTime();
 
     // Redirect destination
     const redirectURL = "./final_page.html";
@@ -320,6 +389,11 @@
 
     let timer;
     let redirectStarted = false;
+
+
+    // =================================
+    // COUNTDOWN FUNCTION
+    // =================================
 
     function updateCountdown() {
 
@@ -377,7 +451,11 @@
 
     }
 
-    // Start countdown
+
+    // =================================
+    // START COUNTDOWN
+    // =================================
+
     updateCountdown();
 
     timer = setInterval(updateCountdown, 1000);
