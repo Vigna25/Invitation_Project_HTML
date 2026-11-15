@@ -16,40 +16,33 @@
       box-sizing: border-box;
     }
 
-    html {
+    html, body {
       width: 100%;
       min-height: 100%;
     }
 
     body {
-      width: 100%;
-      min-height: 100vh;
-      background: #fffaf0;
+      background-color: #fffaf0;
       font-family: "Times New Roman", Times, serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 20px;
     }
 
-    /* Invitation wrapper */
+    /* Main invitation container */
     .invitation {
       position: relative;
       width: 100%;
       max-width: 650px;
-      aspect-ratio: 2 / 3;
-      overflow: hidden;
+      margin: 0 auto;
       container-type: inline-size;
     }
 
-    /* Background */
+    /* Background image */
     .background {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
       display: block;
+      width: 100%;
+      height: auto;
     }
 
     /* Common text styles */
@@ -57,10 +50,10 @@
       position: absolute;
       left: 4%;
       width: 92%;
+      margin: 0;
       text-align: center;
       font-family: "Times New Roman", Times, serif;
-      color: #000;
-      margin: 0;
+      color: #000000;
     }
 
     /* Invitation message */
@@ -79,7 +72,7 @@
       font-weight: bold;
     }
 
-    /* Time */
+    /* Event time */
     .time {
       top: 52.5%;
       font-size: clamp(13px, 3.2cqw, 21px);
@@ -115,16 +108,13 @@
       top: 80%;
       font-size: clamp(10px, 2.4cqw, 15px);
       font-weight: bold;
+      line-height: 1.5;
     }
 
     /* Tablet */
     @media (min-width: 481px) and (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-
       .invitation {
-        max-width: 600px;
+        width: 100%;
       }
     }
 
@@ -169,6 +159,10 @@
       .venue {
         font-size: 2.3cqw;
       }
+
+      .lunch {
+        font-size: 2.3cqw;
+      }
     }
 
   </style>
@@ -195,12 +189,12 @@
 
     <!-- Event date -->
     <p class="invitation-text date">
-      20 November 2026
+      <strong>20 November 2026</strong>
     </p>
 
     <!-- Event time -->
     <p class="invitation-text time">
-      @ 9:39 AM
+      <strong>@ 9:39 AM</strong>
     </p>
 
     <!-- Countdown -->
@@ -230,11 +224,12 @@
 
   <script>
 
-    // Engagement date and time in IST
+    // Engagement date and time (IST)
     const targetDate = new Date(
       "2026-11-20T09:39:00+05:30"
     ).getTime();
 
+    // Redirect destination
     const redirectURL = "./final_page.html";
 
     const countdownElement =
@@ -248,7 +243,7 @@
       const now = Date.now();
       const distance = targetDate - now;
 
-      // Event started
+      // Event has started
       if (distance <= 0) {
 
         clearInterval(timer);
@@ -256,11 +251,12 @@
         countdownElement.innerHTML =
           "⌛ <strong>The Event has already started!</strong>";
 
+        // Redirect after 3 seconds
         if (!redirectStarted) {
 
           redirectStarted = true;
 
-          setTimeout(() => {
+          setTimeout(function () {
             window.location.href = redirectURL;
           }, 3000);
 
@@ -288,6 +284,7 @@
         (distance % (1000 * 60)) / 1000
       );
 
+      // Display countdown
       countdownElement.innerHTML =
         "⌛ <strong>" +
         days + "d " +
@@ -295,11 +292,13 @@
         minutes + "m " +
         seconds + "s" +
         "</strong>";
+
     }
 
     // Initialize countdown
     updateCountdown();
 
+    // Update every second
     timer = setInterval(updateCountdown, 1000);
 
   </script>
