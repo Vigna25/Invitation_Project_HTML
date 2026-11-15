@@ -114,6 +114,19 @@
 
   </main>
 
+  <script>
+  window.addEventListener("load", () => {
+    const scrollPosition =
+      (document.documentElement.scrollHeight -
+       window.innerHeight) * 0.35;
+
+    window.scrollTo({
+      top: scrollPosition,
+      behavior: "instant"
+    });
+  });
+</script>
+
 </body>
 
 </html>
