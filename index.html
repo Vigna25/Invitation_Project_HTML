@@ -298,11 +298,9 @@
 
   <!-- Countdown functionality -->
   <script>
-
+    TEST_MODE = true
     // Engagement date and time (IST)
-    const targetDate = new Date(
-      "2026-11-20T09:39:00+05:30"
-    ).getTime();
+    const targetDate = TEST_MODE ? Date.now() + 30 * 1000: new Date("2026-11-20T09:39:00+05:30").getTime();
 
     // Redirect destination
     const redirectURL = "./final_page.html";
