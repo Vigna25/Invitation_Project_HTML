@@ -13,6 +13,7 @@
   <title>Event Has Started!</title>
 
   <style>
+
     /* Global reset */
     * {
       margin: 0;
@@ -33,12 +34,12 @@
       align-items: flex-start;
     }
 
-    /* Same container dimensions as index.html */
+    /* Main invitation */
     .invitation {
       position: relative;
       width: 100%;
       max-width: 650px;
-      aspect-ratio: 2 / 3;
+      aspect-ratio: 823 / 1164;
       overflow: hidden;
     }
 
@@ -51,26 +52,23 @@
       width: 100%;
       height: 100%;
 
-      object-fit: cover;
+      object-fit: contain;
       object-position: center center;
     }
 
-    /* Mobile full-screen layout */
+    /* Mobile layout */
     @media (max-width: 600px) {
 
       body {
-        overflow: hidden;
+        padding: 0;
+        overflow-x: hidden;
       }
 
       .invitation {
-        width: 100%;
+        width: min(100vw, calc(100dvh * 823 / 1164));
         max-width: none;
-
-        height: 100vh;
-        height: 100svh;
-        height: 100dvh;
-
-        aspect-ratio: auto;
+        height: auto;
+        aspect-ratio: 823 / 1164;
       }
 
       .late {
@@ -81,9 +79,11 @@
 
     /* Smaller phones */
     @media (max-width: 360px) {
+
       .invitation {
-        width: 100%;
+        width: min(100vw, calc(100dvh * 823 / 1164));
       }
+
     }
 
     /* Desktop and tablet */
@@ -97,6 +97,7 @@
       .invitation {
         width: min(100%, 650px);
       }
+
     }
 
   </style>
@@ -113,19 +114,6 @@
     >
 
   </main>
-
-  <script>
-  window.addEventListener("load", () => {
-    const scrollPosition =
-      (document.documentElement.scrollHeight -
-       window.innerHeight) * 0.40;
-
-    window.scrollTo({
-      top: scrollPosition,
-      behavior: "instant"
-    });
-  });
-</script>
 
 </body>
 
